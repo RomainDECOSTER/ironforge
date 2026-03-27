@@ -1,0 +1,23 @@
+{
+  "description": "Ironforge session hooks: LSP detection and plugin availability check",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/detect-lsp.sh\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Ironforge is active. Check if all 6 dependency plugins are available in this session: BMAD (@analyst, @architect, @scrum-master, @dev agents), Superpowers (brainstorming, TDD enforcement), Sudocode (upsert_spec, upsert_issue), Context7 (use context7), security-guidance (pre-tool hook), and code-review (/code-review). If any are missing, briefly tell the user to run /setup. Then check the project for Cargo.toml and tsconfig.json/package.json and confirm which LSPs are active."
+          }
+        ]
+      }
+    ]
+  }
+}
