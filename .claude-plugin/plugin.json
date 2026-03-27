@@ -1,0 +1,67 @@
+{
+  "name": "ironforge",
+  "version": "1.0.0",
+  "description": "Orchestrates BMAD, Superpowers, Sudocode, Context7, security-guidance, and code-review into a unified structured development workflow with conditional LSP support for Rust and TypeScript.",
+  "author": {
+    "name": "RomainDECOSTER",
+    "url": "https://github.com/RomainDECOSTER"
+  },
+  "homepage": "https://github.com/RomainDECOSTER/ironforge",
+  "repository": "https://github.com/RomainDECOSTER/ironforge",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "orchestration",
+    "bmad",
+    "tdd",
+    "code-review",
+    "security",
+    "lsp"
+  ],
+  "dependencies": [
+    {
+      "name": "bmad-method",
+      "source": "npx bmad-method install"
+    },
+    {
+      "name": "superpowers",
+      "source": "obra/superpowers-marketplace"
+    },
+    {
+      "name": "sudocode",
+      "source": "sudocode-ai/sudocode"
+    },
+    {
+      "name": "context7",
+      "source": "upstash/context7"
+    },
+    {
+      "name": "security-guidance",
+      "source": "anthropics-claude-code"
+    },
+    {
+      "name": "code-review",
+      "source": "anthropics-claude-code"
+    }
+  ],
+  "skills": [
+    "skills/full-workflow",
+    "skills/setup"
+  ],
+  "hooks": "hooks/hooks.json",
+  "lspServers": {
+    "rust-analyzer": {
+      "command": "rust-analyzer",
+      "languages": ["rust"],
+      "filePatterns": ["*.rs"],
+      "rootIndicators": ["Cargo.toml"]
+    },
+    "typescript-lsp": {
+      "command": "typescript-language-server",
+      "args": ["--stdio"],
+      "languages": ["typescript", "javascript", "typescriptreact", "javascriptreact"],
+      "filePatterns": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rootIndicators": ["tsconfig.json", "package.json"]
+    }
+  }
+}
