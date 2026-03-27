@@ -109,8 +109,7 @@ This phase applies when resuming work in a new session:
 
 ## Important Guidelines
 
-- Follow phases in strict order (1 → 2 → 3 → 4 → 5)
-- Phase 6 only applies when resuming an existing workflow
+- Follow phases in strict order (1 → 2 → 3 → 4 → 5), using Phase 6 only when resuming an existing workflow
 - If any phase reveals issues or gaps, loop back to the appropriate earlier phase
 - Always get user validation before persisting specs (Phase 2) and before starting implementation (Phase 3)
 - Each BMAD agent activation should leverage the agent's full capabilities — do not shortcut the methodology

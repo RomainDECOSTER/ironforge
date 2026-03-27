@@ -29,7 +29,7 @@ if [ "$FOUND_RUST" = false ] && [ "$FOUND_TS" = false ]; then
 fi
 
 # Check first-run marker
-MARKER="${CLAUDE_PLUGIN_DATA:-.}/.initialized"
+MARKER="${CLAUDE_PLUGIN_DATA:-${HOME}/.claude/plugins/data/ironforge}/.initialized"
 if [ ! -f "$MARKER" ]; then
   echo "[setup] First run detected. Run /setup to verify all dependencies are installed."
   mkdir -p "$(dirname "$MARKER")"

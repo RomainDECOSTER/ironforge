@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/detect-lsp.sh"
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/detect-lsp.sh\""
           }
         ]
       },
