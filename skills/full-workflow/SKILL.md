@@ -34,7 +34,7 @@ If `$ARGUMENTS` is empty, ask the user what feature, bug, or refactoring task th
 
 ## Phase 1: Analysis
 
-Activate the BMAD `@analyst` agent to produce a structured PRD (Product Requirements Document):
+Activate the BMAD `@bmad-agent-analyst` agent to produce a structured PRD (Product Requirements Document):
 
 - Break down the task into clear, measurable acceptance criteria
 - Identify affected components, modules, and system boundaries
@@ -45,9 +45,9 @@ Activate the BMAD `@analyst` agent to produce a structured PRD (Product Requirem
 
 ## Phase 2: Design
 
-Activate the BMAD `@architect` agent combined with Superpowers:
+Activate the BMAD `@bmad-agent-architect` agent combined with `@bmad-brainstorming`:
 
-1. **Brainstorming first** — Trigger the Superpowers brainstorming skill before making any technical decision. Explore at least 3 approaches before converging.
+1. **Brainstorming first** — Trigger `@bmad-brainstorming` before making any technical decision. Explore at least 3 approaches before converging.
 2. **Context7 documentation** — For every library or framework mentioned in the design, run `use context7` to fetch up-to-date, version-specific API documentation. Ensure the APIs referenced in the spec actually exist in the current version.
 3. **User validation** — Present the proposed architecture to the user for validation before persisting.
 4. **Persist the spec** — On user approval, call `upsert_spec()` from Sudocode to save the specification into git (`.sudocode/` directory).
@@ -56,7 +56,7 @@ Activate the BMAD `@architect` agent combined with Superpowers:
 
 ## Phase 3: Planning
 
-Activate the BMAD `@scrum-master` agent:
+Activate the BMAD `@bmad-agent-sm` agent:
 
 1. Decompose the validated spec into small issues of **2-5 minutes** each
 2. Each issue must specify:
@@ -70,7 +70,7 @@ Activate the BMAD `@scrum-master` agent:
 
 ## Phase 4: Implementation
 
-Activate the BMAD `@dev` agent. Implement issues one by one in dependency order:
+Activate the BMAD `@bmad-agent-dev` agent. Implement issues one by one in dependency order:
 
 ### For each issue:
 
