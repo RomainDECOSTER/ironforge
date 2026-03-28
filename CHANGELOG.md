@@ -1,0 +1,29 @@
+# Changelog
+
+All notable changes to Ironforge will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [1.0.0] - 2026-03-28
+
+### Added
+
+- Plugin manifest (`.claude-plugin/plugin.json`) with 6 permanent dependencies and 2 conditional LSPs
+- `/full-workflow` skill: 6-phase orchestration (Analysis, Design, Planning, Implementation, Review, Resume)
+  - Phase 1: `@bmad-agent-analyst` for structured PRD
+  - Phase 2: `@bmad-agent-architect` + `@bmad-brainstorming` + Context7
+  - Phase 3: `@bmad-agent-sm` for issue decomposition via Sudocode
+  - Phase 4: `@bmad-agent-dev` with TDD cycle (RED → GREEN → REFACTOR → COMMIT)
+  - Phase 5: `/code-review` with confidence-based blocking (≥ 80)
+  - Phase 6: Session resume via Sudocode specs and issue statuses
+- `/setup` skill for dependency verification and installation guide
+- `SessionStart` hook with LSP auto-detection (`Cargo.toml` → rust-analyzer, `package.json`/`tsconfig.json` → TypeScript LSP)
+- `detect-lsp.sh` project scanner with first-run marker
+- `postinstall.sh` manual dependency installation helper
+- README with full documentation
+
+[Unreleased]: https://github.com/RomainDECOSTER/ironforge/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/RomainDECOSTER/ironforge/releases/tag/v1.0.0
