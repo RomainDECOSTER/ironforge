@@ -5,6 +5,22 @@ All notable changes to Ironforge will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- `install.sh` — one-command installer that sets up Ironforge and all 6 dependency plugins
+  via the `claude plugin` CLI
+
+### Changed
+
+- README: installation now uses `install.sh` instead of manual `/plugin` commands
+- README: skill commands updated to use namespaced format (`/ironforge:setup`, `/ironforge:full-workflow`)
+
+### Removed
+
+- `scripts/postinstall.sh` — replaced by `install.sh`
+
 ## [1.0.3] - 2026-03-30
 
 ### Fixed

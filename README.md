@@ -28,15 +28,21 @@ LSP detection runs at every session start via the `SessionStart` hook, so it ada
 
 ## Installation
 
-```
-/plugin marketplace add RomainDECOSTER/ironforge
-/plugin install ironforge@ironforge-marketplace
+One command installs Ironforge and all 6 dependency plugins:
+
+```bash
+bash <(curl -sSL https://raw.githubusercontent.com/RomainDECOSTER/ironforge/main/install.sh)
 ```
 
-After installation, verify all dependencies:
+This automatically:
+- Adds all required marketplaces
+- Installs Ironforge, BMAD, Superpowers, Sudocode, Context7, security-guidance, and code-review
+- Initializes Sudocode in the current project (if in a git repo)
+
+After installation, verify everything is configured:
 
 ```
-/setup
+/ironforge:setup
 ```
 
 ## Workflow (6 Phases)
@@ -53,15 +59,15 @@ When you describe a feature or bug, Ironforge orchestrates:
 Trigger the full workflow:
 
 ```
-/full-workflow Implement user authentication with JWT tokens
+/ironforge:full-workflow Implement user authentication with JWT tokens
 ```
 
 ## Available Commands
 
 | Command | Description |
 |---------|-------------|
-| `/full-workflow <task>` | Run the complete 6-phase workflow |
-| `/setup` | Verify and install all dependencies |
+| `/ironforge:full-workflow <task>` | Run the complete 6-phase workflow |
+| `/ironforge:setup` | Verify and install all dependencies |
 | `@bmad-agent-analyst` | BMAD analysis agent (requirements, PRD) |
 | `@bmad-agent-architect` | BMAD architecture agent (design, tech decisions) |
 | `@bmad-agent-sm` | BMAD planning agent (issue decomposition) |
