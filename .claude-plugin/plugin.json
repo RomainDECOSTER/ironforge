@@ -1,6 +1,6 @@
 {
   "name": "ironforge",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Orchestrates BMAD, Superpowers, Sudocode, Context7, security-guidance, and code-review into a unified structured development workflow with conditional LSP support for Rust and TypeScript.",
   "author": {
     "name": "RomainDECOSTER",
