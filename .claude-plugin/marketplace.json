@@ -10,7 +10,7 @@
       "name": "ironforge",
       "description": "Unified structured development workflow with 6 permanent tools and conditional LSP support",
       "category": "workflow",
-      "source": ".",
+      "source": "./",
       "homepage": "https://github.com/RomainDECOSTER/ironforge"
     }
   ]
