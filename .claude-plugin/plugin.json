@@ -44,24 +44,24 @@
       "source": "anthropics-claude-code"
     }
   ],
-  "skills": [
-    "skills/full-workflow",
-    "skills/setup"
-  ],
-  "hooks": "hooks/hooks.json",
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
   "lspServers": {
     "rust-analyzer": {
       "command": "rust-analyzer",
-      "languages": ["rust"],
-      "filePatterns": ["*.rs"],
-      "rootIndicators": ["Cargo.toml"]
+      "extensionToLanguage": {
+        ".rs": "rust"
+      }
     },
     "typescript-lsp": {
       "command": "typescript-language-server",
       "args": ["--stdio"],
-      "languages": ["typescript", "javascript", "typescriptreact", "javascriptreact"],
-      "filePatterns": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rootIndicators": ["tsconfig.json", "package.json"]
+      "extensionToLanguage": {
+        ".ts": "typescript",
+        ".tsx": "typescriptreact",
+        ".js": "javascript",
+        ".jsx": "javascriptreact"
+      }
     }
   }
 }
