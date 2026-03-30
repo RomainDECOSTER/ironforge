@@ -17,8 +17,8 @@ fi
 
 BUMP_TYPE="$1"
 
-# Read current version
-CURRENT=$(grep -oP '"version":\s*"\K[0-9]+\.[0-9]+\.[0-9]+' "$PLUGIN_JSON")
+# Read current version (compatible macOS + Linux)
+CURRENT=$(sed -n 's/.*"version": *"\([0-9]*\.[0-9]*\.[0-9]*\)".*/\1/p' "$PLUGIN_JSON")
 if [ -z "$CURRENT" ]; then
   echo "Error: could not read version from $PLUGIN_JSON"
   exit 1
@@ -37,19 +37,31 @@ TODAY=$(date +%Y-%m-%d)
 
 echo "Bumping version: $CURRENT → $NEW_VERSION"
 
-# Update plugin.json
-sed -i "s/\"version\": \"$CURRENT\"/\"version\": \"$NEW_VERSION\"/" "$PLUGIN_JSON"
+# Portable sed in-place (macOS requires '' arg, Linux does not)
+sedi() {
+  if sed --version >/dev/null 2>&1; then
+    sed -i "$@"
+  else
+    sed -i '' "$@"
+  fi
+}
 
-# Update CHANGELOG.md: replace [Unreleased] section header with new version
-sed -i "s/^## \[Unreleased\]/## [Unreleased]\n\n## [$NEW_VERSION] - $TODAY/" "$CHANGELOG"
+# Update plugin.json
+sedi "s/\"version\": \"$CURRENT\"/\"version\": \"$NEW_VERSION\"/" "$PLUGIN_JSON"
+
+# Update CHANGELOG.md: insert new version header after [Unreleased]
+sedi "/^## \[Unreleased\]/a\\
+\\
+## [$NEW_VERSION] - $TODAY" "$CHANGELOG"
 
 # Update comparison links at bottom of CHANGELOG
-sed -i "s|\[Unreleased\]: \(.*\)/compare/v.*\.\.\.HEAD|[Unreleased]: \1/compare/v$NEW_VERSION...HEAD|" "$CHANGELOG"
+sedi "s|\[Unreleased\]: \(.*\)/compare/v.*\.\.\.HEAD|[Unreleased]: \1/compare/v$NEW_VERSION...HEAD|" "$CHANGELOG"
 
 # Add new version link before the last version link
 PREV_TAG="v$CURRENT"
 NEW_TAG="v$NEW_VERSION"
-sed -i "/^\[$CURRENT\]/i [$NEW_VERSION]: https://github.com/RomainDECOSTER/ironforge/compare/$PREV_TAG...$NEW_TAG" "$CHANGELOG"
+sedi "/^\[$CURRENT\]/i\\
+[$NEW_VERSION]: https://github.com/RomainDECOSTER/ironforge/compare/$PREV_TAG...$NEW_TAG" "$CHANGELOG"
 
 echo ""
 echo "Updated $PLUGIN_JSON → $NEW_VERSION"
