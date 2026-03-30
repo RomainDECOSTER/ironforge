@@ -30,7 +30,7 @@ LSP detection runs at every session start via the `SessionStart` hook, so it ada
 
 ```
 /plugin marketplace add RomainDECOSTER/ironforge
-/plugin install ironforge
+/plugin install ironforge@ironforge-marketplace
 ```
 
 After installation, verify all dependencies:
