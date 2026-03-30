@@ -18,34 +18,7 @@
     "security",
     "lsp"
   ],
-  "dependencies": [
-    {
-      "name": "bmad-method",
-      "source": "npx bmad-method install"
-    },
-    {
-      "name": "superpowers",
-      "source": "obra/superpowers-marketplace"
-    },
-    {
-      "name": "sudocode",
-      "source": "sudocode-ai/sudocode"
-    },
-    {
-      "name": "context7",
-      "source": "upstash/context7"
-    },
-    {
-      "name": "security-guidance",
-      "source": "anthropics-claude-code"
-    },
-    {
-      "name": "code-review",
-      "source": "anthropics-claude-code"
-    }
-  ],
   "skills": "./skills/",
-  "hooks": "./hooks/hooks.json",
   "lspServers": {
     "rust-analyzer": {
       "command": "rust-analyzer",
