@@ -1,0 +1,17 @@
+{
+  "name": "ironforge-marketplace",
+  "description": "Ironforge plugin marketplace — orchestrates BMAD, Superpowers, Sudocode, Context7, security-guidance, and code-review into a unified development workflow.",
+  "owner": {
+    "name": "RomainDECOSTER",
+    "url": "https://github.com/RomainDECOSTER"
+  },
+  "plugins": [
+    {
+      "name": "ironforge",
+      "description": "Unified structured development workflow with 6 permanent tools and conditional LSP support",
+      "category": "workflow",
+      "source": ".",
+      "homepage": "https://github.com/RomainDECOSTER/ironforge"
+    }
+  ]
+}

@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Marketplace manifest (`.claude-plugin/marketplace.json`) for proper plugin installation
+- CHANGELOG.md and `scripts/bump-version.sh` for semantic versioning
+
+### Fixed
+
+- Installation commands now use correct `@ironforge-marketplace` syntax
+
 ## [1.0.0] - 2026-03-28
 
 ### Added
