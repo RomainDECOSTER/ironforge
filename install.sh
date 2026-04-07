@@ -2,7 +2,7 @@
 # Ironforge — One-command installer
 # Usage: bash <(curl -sSL https://raw.githubusercontent.com/RomainDECOSTER/ironforge/main/install.sh)
 #
-# Installs Ironforge and all 6 dependency plugins into Claude Code.
+# Installs Ironforge and all 5 dependency plugins into Claude Code.
 
 set -euo pipefail
 
@@ -51,13 +51,12 @@ PLUGINS=(
   "superpowers@superpowers-marketplace"
   "sudocode@sudocode-marketplace"
   "context7-plugin@context7-marketplace"
-  "security-guidance@anthropics-claude-code"
-  "code-review@anthropics-claude-code"
+  "security-guidance@claude-plugins-official"
 )
 
 for plugin in "${PLUGINS[@]}"; do
   info "  Installing: $plugin"
-  claude plugin install "$plugin" || warn "  Could not install $plugin (may already exist or name may differ)"
+  claude plugin install --scope project "$plugin" || warn "  Could not install $plugin (may already exist or name may differ)"
 done
 
 echo ""
@@ -69,7 +68,29 @@ npx bmad-method install || warn "Could not install bmad-method via npx"
 
 echo ""
 
-# ─── Step 4: Initialize Sudocode (if in a project) ──────────────────────────
+# ─── Step 4: Install agency-agents ───────────────────────────────────────────
+
+info "Installing agency-agents..."
+
+AGENCY_DIR="$(mktemp -d)"
+if git clone --depth 1 https://github.com/msitarzewski/agency-agents "$AGENCY_DIR" 2>/dev/null; then
+  if [ -f "$AGENCY_DIR/scripts/install.sh" ]; then
+    bash "$AGENCY_DIR/scripts/install.sh" --tool claude-code || warn "agency-agents install script failed"
+  else
+    mkdir -p ~/.claude/agents
+    cp -r "$AGENCY_DIR"/agents/* ~/.claude/agents/ 2>/dev/null || warn "Could not copy agency-agents to ~/.claude/agents/"
+  fi
+  rm -rf "$AGENCY_DIR"
+  info "  agency-agents installed"
+else
+  warn "Could not clone agency-agents — install manually:"
+  warn "  git clone https://github.com/msitarzewski/agency-agents"
+  warn "  bash agency-agents/scripts/install.sh --tool claude-code"
+fi
+
+echo ""
+
+# ─── Step 5: Initialize Sudocode (if in a project) ──────────────────────────
 
 if [ -d ".git" ] && [ ! -d ".sudocode" ]; then
   info "Initializing Sudocode in current project..."
@@ -91,8 +112,8 @@ info "  - Superpowers (TDD enforcement)"
 info "  - Sudocode (persistent memory)"
 info "  - Context7 (library documentation)"
 info "  - security-guidance (security hooks)"
-info "  - code-review (automated review)"
+info "  - agency-agents (144 specialized agents)"
 echo ""
 info "Open Claude Code and try:"
-info "  /ironforge:full-workflow Describe your task here"
+info "  /ironforge:start Describe your task here"
 echo ""

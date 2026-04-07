@@ -13,7 +13,7 @@ allowed-tools:
 
 # Ironforge Setup
 
-You are running the Ironforge setup procedure. Verify that all 6 dependency plugins are available and help the user install any that are missing.
+You are running the Ironforge setup procedure. Verify that all dependencies are available and help the user install any that are missing.
 
 ## Required Plugins and Installation Commands
 
@@ -54,14 +54,19 @@ Check each plugin's availability in the current session. For any that are missin
 - **Check**: Look for security-guidance pre-tool hook
 - **Install**:
   ```
-  /plugin install security-guidance@anthropics-claude-code
+  /plugin install security-guidance@claude-plugins-official
   ```
 
-### 6. code-review
-- **Check**: Look for `/code-review` command
-- **Install**:
+### 6. agency-agents
+- **Check**: Look for agent files in `~/.claude/agents/` — specifically `engineering-code-reviewer` and `testing-reality-checker`
+  ```bash
+  ls ~/.claude/agents/ 2>/dev/null | grep -c engineering
   ```
-  /plugin install code-review@anthropics-claude-code
+- **Install** (requires git):
+  ```bash
+  git clone --depth 1 https://github.com/msitarzewski/agency-agents /tmp/agency-agents
+  bash /tmp/agency-agents/scripts/install.sh --tool claude-code
+  rm -rf /tmp/agency-agents
   ```
 
 ## Post-Install: Initialize Sudocode
@@ -76,8 +81,8 @@ This creates the `.sudocode/` directory where specs and issues are persisted and
 
 ## Steps
 
-1. Check which of the 6 plugins are currently available in this session
-2. For each missing plugin, display the installation commands above — do NOT run `/plugin` commands yourself, the user must invoke them
+1. Check which of the 6 dependencies are currently available in this session
+2. For each missing dependency, display the installation commands above — do NOT run `/plugin` commands yourself, the user must invoke them
 3. If `.sudocode/` is missing, inform the user to run `sudocode init`
-4. Summarize the status of all 6 plugins (installed / missing)
+4. Summarize the status of all 6 dependencies (installed / missing)
 5. Confirm whether Ironforge is fully configured or list remaining actions

@@ -1,10 +1,10 @@
 ---
 name: full-workflow
 description: >
-  Ironforge main workflow. Triggers when the user describes a new feature, bug fix, or refactoring task.
-  Orchestrates BMAD agents, Superpowers brainstorming and TDD, Sudocode persistence, Context7 documentation,
-  security-guidance, and code-review into a 6-phase structured development pipeline.
-argument-hint: "Describe the feature, bug, or refactoring task"
+  Ironforge full pipeline orchestrator. Chains all skills in order for a new project or feature:
+  start → bmad-analyze → bmad-to-sudocode → implement → review. Use this for projects with no
+  existing artefacts. For projects with partial artefacts, invoke individual skills directly.
+argument-hint: "Describe the feature or project"
 user-invocable: true
 disable-model-invocation: false
 effort: high
@@ -22,94 +22,113 @@ allowed-tools:
 
 # Ironforge Full Workflow
 
-You are executing the Ironforge structured development workflow. Follow all 6 phases in order. Do not skip any phase.
+You are the Ironforge pipeline orchestrator. Your job is to call each skill in sequence and hand
+off context between them. You do not implement the logic of each skill — you coordinate.
+
+This skill is appropriate when starting from scratch. If artefacts already exist, tell the user
+to invoke individual skills directly instead.
 
 ## Task
 
 $ARGUMENTS
 
-If `$ARGUMENTS` is empty, ask the user what feature, bug, or refactoring task they want to work on before proceeding.
+If `$ARGUMENTS` is empty, ask the user what feature or project they want to work on.
 
 ---
 
-## Phase 1: Analysis
+## Step 1 — Entry check
 
-Activate the BMAD `@bmad-agent-analyst` agent to produce a structured PRD (Product Requirements Document):
+Before starting the pipeline, run the same artefact check as `/ironforge:start`:
 
-- Break down the task into clear, measurable acceptance criteria
-- Identify affected components, modules, and system boundaries
-- List assumptions and open questions
-- Output a structured PRD before moving to Phase 2
+- Does `docs/briefs/brief.md` exist?
+- Does `docs/prd/prd.md` exist?
+- Does `docs/arch/architecture.md` exist?
+- Does `.sudocode/` contain existing specs or issues?
 
----
+If any of these exist, stop and tell the user:
 
-## Phase 2: Design
+> Existing artefacts detected. Use individual skills to avoid overwriting prior work:
+> - To regenerate BMAD docs: `/ironforge:bmad-analyze`
+> - To convert existing BMAD docs: `/ironforge:bmad-to-sudocode`
+> - To implement pending issues: `/ironforge:implement`
+> - To review: `/ironforge:review`
 
-Activate the BMAD `@bmad-agent-architect` agent combined with `@bmad-brainstorming`:
-
-1. **Brainstorming first** — Trigger `@bmad-brainstorming` before making any technical decision. Explore at least 3 approaches before converging.
-2. **Context7 documentation** — For every library or framework mentioned in the design, run `use context7` to fetch up-to-date, version-specific API documentation. Ensure the APIs referenced in the spec actually exist in the current version.
-3. **User validation** — Present the proposed architecture to the user for validation before persisting.
-4. **Persist the spec** — On user approval, call `upsert_spec()` from Sudocode to save the specification into git (`.sudocode/` directory).
-
----
-
-## Phase 3: Planning
-
-Activate the BMAD `@bmad-agent-sm` agent:
-
-1. Decompose the validated spec into small issues of **2-5 minutes** each
-2. Each issue must specify:
-   - Exact files to create or modify
-   - Dependencies on other issues (execution order)
-   - Clear done criteria
-3. Call `upsert_issue()` from Sudocode for each issue, including dependency links
-4. Present the full issue list to the user for review
+If nothing exists, continue.
 
 ---
 
-## Phase 4: Implementation
+## Step 2 — Mode selection
 
-Activate the BMAD `@bmad-agent-dev` agent. Implement issues one by one in dependency order:
+Propose a mode based on the task description (same logic as `/ironforge:start`):
 
-### For each issue:
+```
+## Ironforge — Proposed mode: [FEATURE / FULL]
 
-1. **Context7 auto-activation** — When working with any library or framework, Context7 activates automatically to provide current documentation
-2. **security-guidance** — Runs automatically as a pre-tool hook before every file write. No manual action needed.
-3. **LSP diagnostics** — If rust-analyzer or TypeScript LSP is active, leverage real-time diagnostics (type errors, clippy warnings) and fix them as they appear
-4. **TDD cycle (Superpowers)** — Follow the strict RED → GREEN → REFACTOR → COMMIT cycle enforced by Superpowers:
-   - **RED**: Write a failing test that captures the issue's acceptance criteria
-   - **GREEN**: Write the minimal code to make the test pass
-   - **REFACTOR**: Clean up while keeping tests green
-   - **COMMIT**: Commit the passing implementation
-5. **Update status** — After completing each issue, update its status in Sudocode
+**Why:** [1-2 sentences]
 
----
+**Pipeline:**
+1. /ironforge:bmad-analyze
+2. /ironforge:bmad-to-sudocode
+3. /ironforge:implement
+4. /ironforge:review
 
-## Phase 5: Review
+Confirm?
+```
 
-After implementing each critical issue (or at the end of the full implementation):
+FAST mode is not handled by this orchestrator — for FAST tasks, use Superpowers `/quick-spec` directly.
 
-1. Trigger `/code-review` to run automated review with parallel agents
-2. **Block on high-confidence findings** — If any issue scores **confidence ≥ 80**, it must be fixed before proceeding
-3. Use `/code-review --comment` to post review findings on the PR if one exists
-4. Loop back to Phase 4 to fix any blocking findings
+Wait for confirmation before continuing.
 
 ---
 
-## Phase 6: Resume Context
+## Step 3 — BMAD Analysis
 
-This phase applies when resuming work in a new session:
+Invoke the logic of `/ironforge:bmad-analyze` inline.
 
-1. Read specs from Sudocode (`.sudocode/` directory) to reload the full project context
-2. Read issue statuses to identify what has been completed and what remains
-3. Resume from the next pending issue without requiring the user to re-explain the context
+Pass the task description and confirmed mode as context. Run all three phases (brief → PRD →
+architecture) with their respective gates. Do not proceed until all three artefacts are validated
+by the user.
 
 ---
 
-## Important Guidelines
+## Step 4 — BMAD → Sudocode
 
-- Follow phases in strict order (1 → 2 → 3 → 4 → 5), using Phase 6 only when resuming an existing workflow
-- If any phase reveals issues or gaps, loop back to the appropriate earlier phase
-- Always get user validation before persisting specs (Phase 2) and before starting implementation (Phase 3)
-- Each BMAD agent activation should leverage the agent's full capabilities — do not shortcut the methodology
+Invoke the logic of `/ironforge:bmad-to-sudocode` inline.
+
+All three artefacts exist at this point. Run the full mapping. Present the spec and issue list
+to the user before continuing.
+
+Wait for the user to confirm the issue list looks correct before proceeding to implementation.
+
+---
+
+## Step 5 — Implementation
+
+Invoke the logic of `/ironforge:implement` inline.
+
+Work through all pending issues in dependency order. After each issue, ask whether to continue
+or pause. Do not run all issues silently in one shot.
+
+---
+
+## Step 6 — Review
+
+Invoke the logic of `/ironforge:review` inline.
+
+Run both passes (code review + QA). If blocking findings are raised, loop back to Step 5 for
+fixes, then re-run the review.
+
+---
+
+## Step 7 — Done
+
+```
+## Ironforge Full Workflow — Complete
+
+- [✓] BMAD analysis (brief, PRD, architecture)
+- [✓] Sudocode specs and issues created
+- [✓] All issues implemented and committed
+- [✓] Code review and QA approved
+
+Ready to merge.
+```

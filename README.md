@@ -1,21 +1,21 @@
 # Ironforge
 
-A Claude Code plugin that orchestrates six development tools and conditional LSPs into a unified, structured development workflow.
+A Claude Code plugin that orchestrates six development tools and conditional LSPs into a composable, skill-based development workflow.
 
 ## What It Does
 
-Ironforge installs and coordinates the following tools into a single pipeline:
+Ironforge installs and coordinates the following tools:
 
 ### Permanent Tools (all projects)
 
 | Tool | Role |
 |------|------|
-| **BMAD** | Specialized agents by role: `@bmad-agent-analyst`, `@bmad-agent-architect`, `@bmad-agent-sm`, `@bmad-agent-dev` + `@bmad-brainstorming` |
-| **Superpowers** | Workflow discipline: forced brainstorming, TDD enforcement, sub-agents |
+| **BMAD** | Specialized agents: `@bmad-agent-analyst`, `@bmad-agent-pm`, `@bmad-agent-sm`, `@bmad-agent-dev`, `@bmad-brainstorming` |
+| **Superpowers** | TDD enforcement, brainstorming discipline, sub-agents |
 | **Sudocode** | Git-native persistent memory: specs, issues, statuses (`.sudocode/`) |
 | **Context7** | Up-to-date, version-specific library documentation injected into prompts |
 | **security-guidance** | Security prevention hook during code writing (automatic) |
-| **code-review** | Automated parallel-agent review before merge |
+| **agency-agents** | 144 specialized agents for review, QA, architecture, and more |
 
 ### Conditional LSPs (detected per session)
 
@@ -24,11 +24,9 @@ Ironforge installs and coordinates the following tools into a single pipeline:
 | **rust-analyzer** | `Cargo.toml` detected |
 | **TypeScript LSP** | `package.json` or `tsconfig.json` detected |
 
-LSP detection runs at every session start via the `SessionStart` hook, so it adapts as the project evolves.
-
 ## Installation
 
-One command installs Ironforge and all 6 dependency plugins:
+One command installs Ironforge and all dependencies:
 
 ```bash
 bash <(curl -sSL https://raw.githubusercontent.com/RomainDECOSTER/ironforge/main/install.sh)
@@ -36,7 +34,8 @@ bash <(curl -sSL https://raw.githubusercontent.com/RomainDECOSTER/ironforge/main
 
 This automatically:
 - Adds all required marketplaces
-- Installs Ironforge, BMAD, Superpowers, Sudocode, Context7, security-guidance, and code-review
+- Installs Ironforge, BMAD, Superpowers, Sudocode, Context7, and security-guidance
+- Installs agency-agents into `~/.claude/agents/`
 - Initializes Sudocode in the current project (if in a git repo)
 
 After installation, verify everything is configured:
@@ -45,64 +44,82 @@ After installation, verify everything is configured:
 /ironforge:setup
 ```
 
-## Workflow (6 Phases)
+## Workflow Modes
 
-When you describe a feature or bug, Ironforge orchestrates:
+Ironforge supports three modes. Start with `/ironforge:start` — it reads the project context, proposes the right mode, and tells you what to invoke next.
 
-1. **Analysis** -- `@bmad-agent-analyst` produces a structured PRD with acceptance criteria
-2. **Design** -- `@bmad-agent-architect` + `@bmad-brainstorming` + Context7 for up-to-date API docs. Validated spec is persisted via Sudocode `upsert_spec()`
-3. **Planning** -- `@bmad-agent-sm` decomposes into 2-5 min issues with exact files and dependencies. Each issue saved via Sudocode `upsert_issue()`
-4. **Implementation** -- `@bmad-agent-dev` implements issue by issue following the TDD cycle (RED -> GREEN -> REFACTOR -> COMMIT). security-guidance and LSPs run automatically in the background.
-5. **Review** -- `/code-review` runs parallel agents. Blocks on findings with confidence >= 80. Posts comments on PR with `--comment` flag.
-6. **Resume** -- On new session, reads Sudocode specs and issue statuses to resume without re-explaining context.
+| Mode | When | Entry point |
+|------|------|-------------|
+| **FAST** | Bug fix, small change (< 1h) | Superpowers `/quick-spec` |
+| **FEATURE** | New feature, new component (1h–1 day) | `/ironforge:start` |
+| **FULL** | New module, major refactor (1 day+) | `/ironforge:start` |
 
-Trigger the full workflow:
+## Skills
 
-```
-/ironforge:full-workflow Implement user authentication with JWT tokens
-```
-
-## Available Commands
+Skills are composable — invoke any skill independently when artefacts already exist.
 
 | Command | Description |
 |---------|-------------|
-| `/ironforge:full-workflow <task>` | Run the complete 6-phase workflow |
+| `/ironforge:start` | Reads project context, proposes mode and entry point, waits for confirmation |
+| `/ironforge:bmad-analyze` | Runs BMAD phases (brief → PRD → architecture) with human gates at each step |
+| `/ironforge:bmad-to-sudocode` | Converts existing BMAD docs into Sudocode specs and issues |
+| `/ironforge:implement [issue-id]` | TDD implementation of Sudocode issues (RED → GREEN → REFACTOR → COMMIT) |
+| `/ironforge:review` | Code review (`@engineering-code-reviewer`) + QA sign-off (`@testing-reality-checker`) |
+| `/ironforge:full-workflow <task>` | Orchestrator: chains all skills for a project with no existing artefacts |
 | `/ironforge:setup` | Verify and install all dependencies |
-| `@bmad-agent-analyst` | BMAD analysis agent (requirements, PRD) |
-| `@bmad-agent-architect` | BMAD architecture agent (design, tech decisions) |
-| `@bmad-agent-sm` | BMAD planning agent (issue decomposition) |
-| `@bmad-agent-dev` | BMAD developer agent (implementation) |
-| `@bmad-brainstorming` | BMAD brainstorming facilitator |
-| `/code-review` | Automated code review with parallel agents |
 
-## Context7 Usage
+## Typical Flows
 
-Context7 activates automatically whenever a library or framework is detected during design or implementation. It injects current, version-specific documentation into the prompt, ensuring the APIs used in specs and code actually exist in the installed version.
+**Starting fresh:**
+```
+/ironforge:start Build a JWT authentication system
+```
 
-You can also trigger it manually:
+**Already have BMAD docs, need Sudocode issues:**
+```
+/ironforge:bmad-to-sudocode
+```
 
+**Resuming implementation on a specific issue:**
+```
+/ironforge:implement i-0042
+```
+
+**Ready to merge:**
+```
+/ironforge:review
+```
+
+## BMAD Artefact Paths
+
+Standardized paths expected by all Ironforge skills:
+
+```
+docs/
+  briefs/   → docs/briefs/brief.md
+  prd/      → docs/prd/prd.md
+  arch/     → docs/arch/architecture.md
+.sudocode/  → specs and issues (FEATURE and FULL modes)
+```
+
+## Context7
+
+Context7 activates automatically whenever a library or framework is detected during design or implementation. It injects current, version-specific documentation into the prompt.
+
+Manual trigger:
 ```
 use context7
 ```
 
-## Security Gates
+## Security
 
-Ironforge has two layers of security:
-
-1. **security-guidance** (prevention) -- Runs as a `PreToolUse` hook before every `Edit` or `Write` operation. Warns about command injection, XSS, SQL injection, and other OWASP vulnerabilities. Fully automatic, no command needed.
-
-2. **code-review** (validation) -- Runs before merge via `/code-review`. Launches parallel review agents that score findings by confidence. Blocks on high-confidence issues (>= 80).
+**security-guidance** runs as a `PreToolUse` hook before every `Edit` or `Write` operation. It warns about command injection, XSS, SQL injection, and other OWASP vulnerabilities. Fully automatic.
 
 ## Sudocode: Persistent Memory
 
-Specs and issues live in the `.sudocode/` directory and are committed to git. This means:
-
-- Project context survives across sessions
-- Any team member can see the current state of specs and issues
-- Resuming work requires no re-explanation -- Ironforge reads `.sudocode/` at session start
+Specs and issues live in `.sudocode/` and are committed to git. Project context survives across sessions — resuming work requires no re-explanation.
 
 Initialize in a new project:
-
 ```
 sudocode init
 ```
