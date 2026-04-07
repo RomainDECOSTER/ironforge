@@ -5,6 +5,29 @@ All notable changes to Ironforge will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-04-07
+
+### Added
+
+- `/ironforge:start` skill — assisted mode selection (FAST/FEATURE/FULL); reads project context, proposes mode with justification, waits for confirmation
+- `/ironforge:bmad-analyze` skill — runs BMAD phases (brief → PRD → architecture) with human validation gates at each step; adapts depth to mode
+- `/ironforge:bmad-to-sudocode` skill — standalone handoff from existing BMAD artefacts to Sudocode specs and issues; generates dependency graph between issues
+- `/ironforge:implement` skill — TDD implementation of Sudocode issues in dependency order (RED → GREEN → REFACTOR → COMMIT); supports issue ID argument
+- `/ironforge:review` skill — two-pass review: `@engineering-code-reviewer` then `@testing-reality-checker`; blocks on BLOCKING findings only
+- agency-agents integration — installed via `git clone` into `~/.claude/agents/`; replaces code-review-graph for review and QA
+
+### Changed
+
+- `/ironforge:full-workflow` refactored as a thin orchestrator that chains atomic skills; refuses to run if artefacts already exist
+- `install.sh` updated to install agency-agents and drop code-review-graph
+- `hooks.json` SessionStart prompt updated to check agency-agents and correct BMAD agent names
+- CLAUDE.md rewritten to document the new composable skill architecture
+- README rewritten with new skill table, workflow modes, and typical flow examples
+
+### Removed
+
+- `code-review-graph` dependency — replaced by agency-agents reviewers
+
 ## [2.0.0] - 2026-03-30
 
 ### Added
@@ -62,6 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `postinstall.sh` manual dependency installation helper
 - README with full documentation
 
+[3.0.0]: https://github.com/RomainDECOSTER/ironforge/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/RomainDECOSTER/ironforge/compare/v1.0.3...v2.0.0
 [1.0.3]: https://github.com/RomainDECOSTER/ironforge/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/RomainDECOSTER/ironforge/compare/v1.0.1...v1.0.2
