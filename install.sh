@@ -70,22 +70,24 @@ echo ""
 
 # ─── Step 4: Install agency-agents ───────────────────────────────────────────
 
-info "Installing agency-agents..."
+info "Installing agency-agents (project-local)..."
 
 AGENCY_DIR="$(mktemp -d)"
 if git clone --depth 1 https://github.com/msitarzewski/agency-agents "$AGENCY_DIR" 2>/dev/null; then
-  if [ -f "$AGENCY_DIR/scripts/install.sh" ]; then
-    bash "$AGENCY_DIR/scripts/install.sh" --tool claude-code || warn "agency-agents install script failed"
+  mkdir -p .claude/agents
+  if [ -d "$AGENCY_DIR/agents" ]; then
+    cp -r "$AGENCY_DIR"/agents/* .claude/agents/ || warn "Could not copy agency-agents to .claude/agents/"
+  elif [ -d "$AGENCY_DIR/claude-code" ]; then
+    cp -r "$AGENCY_DIR"/claude-code/* .claude/agents/ || warn "Could not copy agency-agents to .claude/agents/"
   else
-    mkdir -p ~/.claude/agents
-    cp -r "$AGENCY_DIR"/agents/* ~/.claude/agents/ 2>/dev/null || warn "Could not copy agency-agents to ~/.claude/agents/"
+    warn "Could not find agents directory in cloned repo — check repo structure"
   fi
   rm -rf "$AGENCY_DIR"
-  info "  agency-agents installed"
+  info "  agency-agents installed into .claude/agents/"
 else
   warn "Could not clone agency-agents — install manually:"
-  warn "  git clone https://github.com/msitarzewski/agency-agents"
-  warn "  bash agency-agents/scripts/install.sh --tool claude-code"
+  warn "  git clone https://github.com/msitarzewski/agency-agents /tmp/agency-agents"
+  warn "  mkdir -p .claude/agents && cp -r /tmp/agency-agents/agents/* .claude/agents/"
 fi
 
 echo ""

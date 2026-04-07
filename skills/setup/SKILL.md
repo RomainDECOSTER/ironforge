@@ -58,14 +58,14 @@ Check each plugin's availability in the current session. For any that are missin
   ```
 
 ### 6. agency-agents
-- **Check**: Look for agent files in `~/.claude/agents/` — specifically `engineering-code-reviewer` and `testing-reality-checker`
+- **Check**: Look for agent files in `.claude/agents/` (project-local) — specifically `engineering-code-reviewer` and `testing-reality-checker`
   ```bash
-  ls ~/.claude/agents/ 2>/dev/null | grep -c engineering
+  ls .claude/agents/ 2>/dev/null | grep -c engineering
   ```
-- **Install** (requires git):
+- **Install** (requires git, run from project root):
   ```bash
   git clone --depth 1 https://github.com/msitarzewski/agency-agents /tmp/agency-agents
-  bash /tmp/agency-agents/scripts/install.sh --tool claude-code
+  mkdir -p .claude/agents && cp -r /tmp/agency-agents/agents/* .claude/agents/
   rm -rf /tmp/agency-agents
   ```
 
