@@ -91,7 +91,7 @@ echo ""
 
 if [ -d ".git" ] && [ ! -d ".sudocode" ]; then
   info "Initializing Sudocode in current project..."
-  claude -p "Run sudocode init" || warn "Could not initialize sudocode"
+  npx sudocode init || warn "Could not initialize sudocode — run 'npx sudocode init' manually"
   echo ""
 fi
 
