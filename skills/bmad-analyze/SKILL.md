@@ -4,7 +4,7 @@ description: >
   Runs the BMAD analysis phases to produce structured project artefacts: brief, PRD, and architecture.
   Activates the appropriate BMAD agent for each phase. Each phase requires explicit user validation
   before the next begins. Produces files consumed by /ironforge:bmad-to-sudocode.
-argument-hint: "Describe the feature or project to analyze (optional if already discussed)"
+argument-hint: "Describe the feature or project, or provide a path to an existing notes/ideas file (e.g. my-notes.md)"
 user-invocable: true
 disable-model-invocation: false
 effort: high
@@ -29,6 +29,22 @@ $ARGUMENTS
 
 If `$ARGUMENTS` is empty and no prior context exists in the conversation, ask the user to describe
 the feature or project before starting.
+
+---
+
+## Step 0 — Resolve input
+
+Before anything else, check what `$ARGUMENTS` contains:
+
+**If `$ARGUMENTS` looks like a file path** (ends in `.md`, `.txt`, or the path exists on disk):
+1. Read the file
+2. Use its content as the raw context for the BMAD analyst in Step 2
+3. Tell the user: "I'll use [filename] as input for the brief phase."
+4. Do not treat the file as a BMAD brief — it is raw notes, not a structured artefact
+
+**If `$ARGUMENTS` is a text description**: use it directly as context for Step 2.
+
+**If `$ARGUMENTS` is empty**: proceed to Step 1 normally.
 
 ---
 

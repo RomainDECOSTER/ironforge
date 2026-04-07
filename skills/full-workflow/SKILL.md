@@ -4,7 +4,7 @@ description: >
   Ironforge full pipeline orchestrator. Chains all skills in order for a new project or feature:
   start → bmad-analyze → bmad-to-sudocode → implement → review. Use this for projects with no
   existing artefacts. For projects with partial artefacts, invoke individual skills directly.
-argument-hint: "Describe the feature or project"
+argument-hint: "Describe the feature or project, or provide a path to an existing notes/ideas file (e.g. my-notes.md)"
 user-invocable: true
 disable-model-invocation: false
 effort: high
@@ -38,14 +38,16 @@ If `$ARGUMENTS` is empty, ask the user what feature or project they want to work
 
 ## Step 1 — Entry check
 
-Before starting the pipeline, run the same artefact check as `/ironforge:start`:
+Before starting the pipeline, check if `$ARGUMENTS` is a file path (ends in `.md`, `.txt`, or exists on disk). If so, read the file and treat its content as raw input notes for the BMAD analyst. This is not a BMAD artefact — it is free-form context. Continue with the pipeline.
+
+Then check for existing BMAD artefacts:
 
 - Does `docs/briefs/brief.md` exist?
 - Does `docs/prd/prd.md` exist?
 - Does `docs/arch/architecture.md` exist?
 - Does `.sudocode/` contain existing specs or issues?
 
-If any of these exist, stop and tell the user:
+If any of these exist **and no input file was provided**, stop and tell the user:
 
 > Existing artefacts detected. Use individual skills to avoid overwriting prior work:
 > - To regenerate BMAD docs: `/ironforge:bmad-analyze`
@@ -53,7 +55,7 @@ If any of these exist, stop and tell the user:
 > - To implement pending issues: `/ironforge:implement`
 > - To review: `/ironforge:review`
 
-If nothing exists, continue.
+If nothing exists, or if an input file was provided, continue.
 
 ---
 
