@@ -83,3 +83,5 @@ Releases are managed by [release-please](https://github.com/googleapis/release-p
 - Merging the Release PR automatically creates a git tag and GitHub Release
 
 No manual version bumping needed — use Conventional Commits in your PRs and commits.
+
+Configuration files: `.release-please-manifest.json`, `release-please-config.json`, `.github/workflows/release-please.yml`
