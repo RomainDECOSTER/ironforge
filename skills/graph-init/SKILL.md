@@ -2,7 +2,7 @@
 name: graph-init
 description: >
   Initialize Graphify on an existing project. Builds the code knowledge graph, configures
-  the MCP server via .mcp.json, installs git hooks for incremental rebuild, and adds
+  the Claude Code integration, installs git hooks for incremental rebuild, and adds
   graphify-out/ to .gitignore. Only useful for existing projects — greenfield projects
   have no ROI.
 user-invocable: true
@@ -48,7 +48,21 @@ continuing.
 
 ---
 
-## Step 3 — Build the graph
+## Step 3 — Platform setup (Claude Code integration)
+
+```bash
+graphify install
+```
+
+This configures Graphify for Claude Code:
+- Writes the MCP server config to `.mcp.json`
+- Installs a `PreToolUse` hook in `settings.json`
+
+Do not modify these files manually — Graphify owns them.
+
+---
+
+## Step 4 — Build the graph
 
 ```bash
 graphify build
@@ -56,28 +70,25 @@ graphify build
 
 This indexes the entire codebase. For large projects, this may take a few minutes.
 Output lands in `graphify-out/`:
-- `graph.json` — queryable graph (used by the MCP server)
+- `graph.json` — queryable graph
 - `graph.html` — visual explorer (open in browser to explore)
 - `GRAPH_REPORT.md` — top nodes and structural surprises
+- `obsidian/` — Obsidian vault (notes per node + graph.canvas)
 
 ---
 
-## Step 4 — Install Claude Code integration
+## Step 5 — Always-on CLAUDE.md integration
 
 ```bash
-graphify install
+graphify claude install
 ```
 
-Graphify manages its own Claude Code integration:
-- Writes the MCP server config to `.mcp.json`
-- Adds a section to `CLAUDE.md` pointing to `GRAPH_REPORT.md`
-- Installs a `PreToolUse` hook in `settings.json`
-
-Do not modify these files manually — Graphify owns them.
+Adds a `## graphify` section to the local `CLAUDE.md` that instructs Claude to check
+the graph before answering codebase questions and rebuild it after code changes.
 
 ---
 
-## Step 5 — Install git hooks
+## Step 6 — Install git hooks
 
 ```bash
 graphify hook install
@@ -89,7 +100,7 @@ manual intervention.
 
 ---
 
-## Step 6 — Update .gitignore
+## Step 7 — Update .gitignore
 
 Check if `graphify-out/` is already ignored:
 
@@ -110,19 +121,21 @@ graphify-out/
 
 ---
 
-## Step 7 — Summary
+## Step 8 — Summary
 
 Print the final status:
 
 ```
 ## Graphify — Initialized
 
-✓ Graph built           (N nodes, M edges)
-✓ MCP configured        (.mcp.json written by graphify install)
-✓ Git hooks installed   (post-commit, post-checkout)
-✓ graphify-out/ ignored (.gitignore updated)
+✓ Graphify installed
+✓ Claude Code integration configured  (graphify install)
+✓ Graph built                         (graphify-out/)
+✓ Always-on CLAUDE.md integration     (graphify claude install)
+✓ Git hooks installed                 (post-commit, post-checkout)
+✓ graphify-out/ ignored               (.gitignore updated)
 
-→ Restart Claude Code to activate the MCP server.
-  The MCP server starts automatically from .mcp.json on session start.
+→ Open graphify-out/graph.html in a browser to explore the graph visually.
+  Open graphify-out/obsidian/ as a vault in Obsidian for graph view + canvas.
   BMAD agents will query the graph via the graph-explore subagent.
 ```
