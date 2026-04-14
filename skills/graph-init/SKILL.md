@@ -30,7 +30,7 @@ ls graphify-out/ 2>/dev/null
 If `graphify-out/` exists, ask the user:
 
 > A Graphify graph already exists. Choose an option:
-> 1. Rebuild from scratch (`graphify build` — overwrites existing graph)
+> 1. Rebuild from scratch (`graphify update .` — overwrites existing graph)
 > 2. Cancel
 
 Wait for the user's response. If cancel, stop.
@@ -70,7 +70,7 @@ Ask the user:
 > 1. **Full pipeline** (`/graphify .`) — semantic extraction via LLM, community detection,
 >    HTML viz, Obsidian vault, GRAPH_REPORT.md. Costs tokens, takes a few minutes.
 >    Recommended for the first run.
-> 2. **Quick build** (`graphify build`) — AST-only, no LLM, fast. No semantic edges,
+> 2. **Quick build** (`graphify update .`) — AST-only, no LLM, fast. No semantic edges,
 >    no community labels, no Obsidian vault.
 
 Wait for the user's response.
@@ -81,7 +81,7 @@ steps here. Resume at Step 5 once it completes.
 
 **If option 2:**
 ```bash
-graphify build
+graphify update .
 ```
 Output lands in `graphify-out/`:
 - `graph.json` — queryable graph
