@@ -74,6 +74,20 @@ If mode is unknown, ask before continuing.
 
 ## Step 2 — Brief (skip if `docs/briefs/brief.md` exists and user confirms)
 
+**Graph context (if available):**
+
+If `graphify-out/` exists in the project root, spawn the graph-explore subagent before
+activating the agent:
+
+> `Agent({ subagent_type: "graph-explore", prompt: "Quels modules et features existent déjà dans le codebase ?" })`
+
+If graph-explore returns content, prepend it to the agent context as:
+```
+## Contexte graphe
+{graph_context}
+```
+If `graphify-out/` is absent or graph-explore returns empty, continue without graph context.
+
 Activate `@bmad-agent-analyst`.
 
 Produce a structured brief covering:
@@ -97,6 +111,14 @@ Present the brief to the user.
 
 ## Step 3 — PRD (skip if `docs/prd/prd.md` exists and user confirms)
 
+**Graph context (if available):**
+
+If `graphify-out/` exists, spawn graph-explore:
+
+> `Agent({ subagent_type: "graph-explore", prompt: "Quelles sont les interfaces publiques et les points d'entrée existants ?" })`
+
+Prepend any returned content as `## Contexte graphe\n{graph_context}` to the agent context.
+
 Activate `@bmad-agent-pm`.
 
 Produce a PRD from the validated brief covering:
@@ -119,6 +141,14 @@ Present the PRD to the user.
 ---
 
 ## Step 4 — Architecture (skip if `docs/arch/architecture.md` exists and user confirms)
+
+**Graph context (if available):**
+
+If `graphify-out/` exists, spawn graph-explore:
+
+> `Agent({ subagent_type: "graph-explore", prompt: "Quels patterns architecturaux sont utilisés ? Quelles dépendances du module cible ?" })`
+
+Prepend any returned content as `## Contexte graphe\n{graph_context}` to the agent context.
 
 Activate `@engineering-software-architect` from agency-agents, combined with `@bmad-brainstorming`.
 
