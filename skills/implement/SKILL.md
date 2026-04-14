@@ -50,6 +50,21 @@ If a blocker is detected (dependency issue not yet complete), stop and report:
 
 ---
 
+## Step 1b — Graph context (if available)
+
+If `graphify-out/` exists in the project root, extract the target function or module name
+from the issue title or description, then spawn graph-explore:
+
+> `Agent({ subagent_type: "graph-explore", prompt: "Qui appelle {cible} ? Que fait-elle appeler ? Blast radius ?" })`
+
+Replace `{cible}` with the actual function/module name from the issue.
+
+If graph-explore returns content, use it to extend the list of files to read in Step 2 —
+callers and callees may need to be read even if not listed in the issue.
+If `graphify-out/` is absent or graph-explore returns empty, proceed directly to Step 2.
+
+---
+
 ## Step 2 — Pre-implementation check
 
 Before writing any code:
