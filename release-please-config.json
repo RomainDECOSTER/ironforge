@@ -9,8 +9,7 @@
           "jsonpath": "$.version"
         }
       ],
-      "changelog-path": "CHANGELOG.md",
-      "changelog-type": "keep-a-changelog"
+      "changelog-path": "CHANGELOG.md"
     }
   }
 }
