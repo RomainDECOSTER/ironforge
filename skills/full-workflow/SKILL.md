@@ -83,6 +83,19 @@ Wait for confirmation before continuing.
 
 ---
 
+### Graph context for Step 3 (if available)
+
+If `graphify-out/` exists, spawn graph-explore once per BMAD phase (Brief, PRD, Architecture)
+with the same questions as in `/ironforge:bmad-analyze`:
+- Brief: `"Quels modules et features existent déjà dans le codebase ?"`
+- PRD: `"Quelles sont les interfaces publiques et les points d'entrée existants ?"`
+- Architecture: `"Quels patterns architecturaux sont utilisés ? Quelles dépendances du module cible ?"`
+
+Prepend any returned content as `## Contexte graphe\n{graph_context}` to each agent's context.
+If `graphify-out/` is absent, run the phases normally.
+
+---
+
 ## Step 3 — BMAD Analysis
 
 Invoke the logic of `/ironforge:bmad-analyze` inline.
@@ -90,6 +103,17 @@ Invoke the logic of `/ironforge:bmad-analyze` inline.
 Pass the task description and confirmed mode as context. Run all three phases (brief → PRD →
 architecture) with their respective gates. Do not proceed until all three artefacts are validated
 by the user.
+
+---
+
+### Graph context for Step 4 (if available)
+
+If `graphify-out/` exists, spawn graph-explore before the Scrum Master maps issues:
+
+> `Agent({ subagent_type: "graph-explore", prompt: "Quel est le blast radius du changement prévu ?" })`
+
+Use the returned content to inform issue sizing and dependency mapping.
+If `graphify-out/` is absent or graph-explore returns empty, proceed normally.
 
 ---
 
@@ -101,6 +125,18 @@ All three artefacts exist at this point. Run the full mapping. Present the spec 
 to the user before continuing.
 
 Wait for the user to confirm the issue list looks correct before proceeding to implementation.
+
+---
+
+### Graph context for Step 5 (if available)
+
+For each issue, if `graphify-out/` exists, spawn graph-explore before starting the TDD cycle:
+
+> `Agent({ subagent_type: "graph-explore", prompt: "Qui appelle {cible} ? Que fait-elle appeler ?" })`
+
+Replace `{cible}` with the function or module targeted by the current issue.
+Use the returned content to identify additional files to read beyond those listed in the issue.
+If `graphify-out/` is absent or graph-explore returns empty, proceed normally.
 
 ---
 
