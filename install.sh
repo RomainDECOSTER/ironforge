@@ -95,6 +95,14 @@ if [ -d ".git" ] && [ ! -d ".sudocode" ]; then
   echo ""
 fi
 
+# ─── Step 6: Suggest Graphify (existing projects only) ──────────────────────
+
+if [ -d ".git" ] && git rev-parse HEAD >/dev/null 2>&1; then
+  info "Tip: run /ironforge:graph-init in Claude Code to build the Graphify"
+  info "     knowledge graph for this project (recommended for existing codebases)."
+  echo ""
+fi
+
 # ─── Done ────────────────────────────────────────────────────────────────────
 
 echo ""
@@ -110,6 +118,7 @@ info "  - Sudocode (persistent memory)"
 info "  - Context7 (library documentation)"
 info "  - security-guidance (security hooks)"
 info "  - agency-agents (144 specialized agents)"
+info "  - Graphify (code knowledge graph, run /ironforge:graph-init)"
 echo ""
 info "Open Claude Code and try:"
 info "  /ironforge:start Describe your task here"
