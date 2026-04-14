@@ -15,10 +15,18 @@ It does not have a build system or test suite of its own — the repository cons
 bash install.sh
 ```
 
-**Bump version (updates `plugin.json`, `CHANGELOG.md`, creates git commit):**
-```bash
-./scripts/bump-version.sh <major|minor|patch>
-```
+**Versioning (automated via release-please):**
+
+Releases are fully automated. On every push to `main`:
+1. GitHub Actions scans commits since the last tag
+2. If releasable commits are found (`feat:`, `fix:`, `feat!:`), a Release PR is opened/updated
+3. Merging the Release PR creates the git tag and GitHub Release
+
+Use [Conventional Commits](https://www.conventionalcommits.org/) in your commit messages:
+- `feat: description` → minor bump
+- `fix: description` → patch bump
+- `feat!: description` or `BREAKING CHANGE:` footer → major bump
+- `docs:`, `chore:`, `refactor:` → no release
 
 **Verify all 5 dependency plugins are available (from within Claude Code):**
 ```
@@ -67,5 +75,11 @@ docs/
 .sudocode/  → specs and issues (FEATURE and FULL)
 ```
 
-### Versioning
-`scripts/bump-version.sh` handles semantic versioning. It updates `.claude-plugin/plugin.json` and `CHANGELOG.md`, and prints the git commands to commit and tag the release (it does not commit automatically).
+### Release workflow
+
+Releases are managed by [release-please](https://github.com/googleapis/release-please) via GitHub Actions. The workflow:
+- Scans for Conventional Commits since the last tag
+- Opens or updates a Release PR with bumped version and updated CHANGELOG
+- Merging the Release PR automatically creates a git tag and GitHub Release
+
+No manual version bumping needed — use Conventional Commits in your PRs and commits.
