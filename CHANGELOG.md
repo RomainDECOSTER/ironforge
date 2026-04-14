@@ -5,6 +5,25 @@ All notable changes to Ironforge will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0](https://github.com/RomainDECOSTER/ironforge/compare/v3.1.0...v3.2.0) (2026-04-14)
+
+
+### Features
+
+* add graph-explore subagent — encapsulates Graphify MCP queries ([f8d58c4](https://github.com/RomainDECOSTER/ironforge/commit/f8d58c408dbd027d16c85c739c66cdc9fb79b024))
+* add graph-init skill — initialize Graphify on existing projects ([bf9ccec](https://github.com/RomainDECOSTER/ironforge/commit/bf9ccec3e03654afeb7815368f4025137ef5701c))
+* add Graphify awareness to SessionStart hook prompt ([2c5868b](https://github.com/RomainDECOSTER/ironforge/commit/2c5868b61a59a49f99ca3228a7774596d2988a8f))
+* add release-please GitHub Actions workflow ([d829802](https://github.com/RomainDECOSTER/ironforge/commit/d8298024146d9b853467056d7423907debf04705))
+* inject graph-explore blast radius check into implement skill ([395470c](https://github.com/RomainDECOSTER/ironforge/commit/395470c2d8e3719f2a13a232c4c93c08305fe30c))
+* inject graph-explore context into bmad-analyze phases ([42b17a8](https://github.com/RomainDECOSTER/ironforge/commit/42b17a8858bc75f951be6bb0c734798ff8ff5926))
+* inject graph-explore context into full-workflow phases ([6b2548d](https://github.com/RomainDECOSTER/ironforge/commit/6b2548d4b9a5107c1cf593206b4e9a495e39b467))
+
+
+### Bug Fixes
+
+* clarify MCP error fallback in graph-explore ([c19ca1e](https://github.com/RomainDECOSTER/ironforge/commit/c19ca1e3463b61b2d4a5144b227787e9a23c210b))
+* remove unsupported changelog-type from release-please config ([a0d6d3a](https://github.com/RomainDECOSTER/ironforge/commit/a0d6d3a783d5fb9ff77801ded73f8eaa0616e920))
+
 ## [3.1.0] - 2026-04-07
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "name": "ironforge",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Orchestrates BMAD, Superpowers, Sudocode, Context7, security-guidance, and agency-agents into a composable skill-based development workflow with conditional LSP support for Rust and TypeScript.",
   "author": {
     "name": "RomainDECOSTER",
@@ -28,7 +28,9 @@
     },
     "typescript-lsp": {
       "command": "typescript-language-server",
-      "args": ["--stdio"],
+      "args": [
+        "--stdio"
+      ],
       "extensionToLanguage": {
         ".ts": "typescript",
         ".tsx": "typescriptreact",
