@@ -63,4 +63,5 @@ Examples of the last bullet:
 - `Limite : macros procédurales opaques pour Tree-sitter`
 - `Limite : bounds génériques non résolus statiquement`
 
-If the MCP tools return nothing relevant to the question, return an empty string.
+If the MCP tools return nothing relevant to the question, or if any tool call fails or
+the MCP server is unavailable, return an empty string.
