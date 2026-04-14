@@ -5,6 +5,18 @@ All notable changes to Ironforge will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0](https://github.com/RomainDECOSTER/ironforge/compare/v3.3.0...v3.4.0) (2026-04-14)
+
+
+### Features
+
+* offer full /graphify pipeline or quick build in graph-init ([7e257c3](https://github.com/RomainDECOSTER/ironforge/commit/7e257c3ca08a77588de1fc57630781be61ff0c97))
+
+
+### Bug Fixes
+
+* replace graphify build with graphify update . (correct command) ([5bbe789](https://github.com/RomainDECOSTER/ironforge/commit/5bbe789fdba0e5881d95d3730088b5b28e3ca793))
+
 ## [3.3.0](https://github.com/RomainDECOSTER/ironforge/compare/v3.2.0...v3.3.0) (2026-04-14)
 
 
