@@ -5,6 +5,13 @@ All notable changes to Ironforge will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.1](https://github.com/RomainDECOSTER/ironforge/compare/v3.4.0...v3.4.1) (2026-04-16)
+
+
+### Bug Fixes
+
+* filter agency-agents .md files by YAML frontmatter before copying ([#15](https://github.com/RomainDECOSTER/ironforge/issues/15)) ([27e7169](https://github.com/RomainDECOSTER/ironforge/commit/27e7169dd8a76d3ee324ae017329c65175db64df)), closes [#14](https://github.com/RomainDECOSTER/ironforge/issues/14)
+
 ## [3.4.0](https://github.com/RomainDECOSTER/ironforge/compare/v3.3.0...v3.4.0) (2026-04-14)
 
 
