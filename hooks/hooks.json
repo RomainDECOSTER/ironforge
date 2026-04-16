@@ -1,5 +1,5 @@
 {
-  "description": "Ironforge session hooks: LSP detection and plugin availability check",
+  "description": "Ironforge session hooks: LSP detection, sudocode server startup (singleton-guarded), and plugin availability check",
   "hooks": {
     "SessionStart": [
       {
