@@ -41,7 +41,8 @@ Use [Conventional Commits](https://www.conventionalcommits.org/) in your commit 
 ### Session startup (hooks)
 `hooks/hooks.json` registers a `SessionStart` hook that:
 1. Runs `scripts/detect-lsp.sh` — scans the working directory for `Cargo.toml` (→ rust-analyzer) or `package.json`/`tsconfig.json` (→ TypeScript LSP), then writes a marker to `${CLAUDE_PLUGIN_DATA}/.initialized`
-2. Prompts Claude to verify all 5 dependency plugins are available
+2. Runs `scripts/start-sudocode-server.sh` — starts the sudocode local server as a background process (singleton-guarded: no-ops if an instance is already running for the current user)
+3. Prompts Claude to verify all 5 dependency plugins are available
 
 ### Skills (user-invocable commands)
 

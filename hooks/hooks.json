@@ -1,5 +1,5 @@
 {
-  "description": "Ironforge session hooks: LSP detection and plugin availability check",
+  "description": "Ironforge session hooks: LSP detection, sudocode server startup (singleton-guarded), and plugin availability check",
   "hooks": {
     "SessionStart": [
       {
@@ -14,7 +14,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "npx sudocode server &>/dev/null &"
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/start-sudocode-server.sh\""
           }
         ]
       },
