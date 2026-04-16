@@ -72,12 +72,33 @@ echo ""
 
 info "Installing agency-agents (project-local)..."
 
+AGENT_COUNT=0
 AGENCY_DIR="$(mktemp -d)"
 if git clone --depth 1 https://github.com/msitarzewski/agency-agents "$AGENCY_DIR" 2>/dev/null; then
   mkdir -p .claude/agents
-  find "$AGENCY_DIR" -name "*.md" -not -path "*/.git/*" -exec cp {} .claude/agents/ \; \
-    && info "  agency-agents installed into .claude/agents/" \
-    || warn "Could not copy agency-agents to .claude/agents/"
+
+  # Only copy .md files that have valid YAML frontmatter (start with "---").
+  # This avoids copying README, CONTRIBUTING, SECURITY, workflow templates,
+  # and other non-agent .md files that break Claude Code's slash commands.
+  # See: https://github.com/RomainDECOSTER/ironforge/issues/14
+  SEARCH_DIR="$AGENCY_DIR"
+  if [ -d "$AGENCY_DIR/agents" ]; then
+    SEARCH_DIR="$AGENCY_DIR/agents"
+  fi
+
+  while IFS= read -r -d '' mdfile; do
+    if head -1 "$mdfile" | grep -q "^---"; then
+      cp "$mdfile" .claude/agents/
+      AGENT_COUNT=$((AGENT_COUNT + 1))
+    fi
+  done < <(find "$SEARCH_DIR" -name "*.md" -not -path "*/.git/*" -print0)
+
+  if [ "$AGENT_COUNT" -gt 0 ]; then
+    info "  agency-agents installed into .claude/agents/ ($AGENT_COUNT agents)"
+  else
+    warn "No valid agent files found in agency-agents repository"
+  fi
+
   rm -rf "$AGENCY_DIR"
 else
   warn "Could not clone agency-agents — install manually:"
@@ -117,7 +138,7 @@ info "  - Superpowers (TDD enforcement)"
 info "  - Sudocode (persistent memory)"
 info "  - Context7 (library documentation)"
 info "  - security-guidance (security hooks)"
-info "  - agency-agents (144 specialized agents)"
+info "  - agency-agents ($AGENT_COUNT specialized agents)"
 info "  - Graphify (code knowledge graph, run /ironforge:graph-init)"
 echo ""
 info "Open Claude Code and try:"
