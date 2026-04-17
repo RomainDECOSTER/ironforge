@@ -45,7 +45,20 @@ Present a brief summary of what changed (files touched, rough scope) before acti
 
 ---
 
-## Step 2 — Code review
+## Step 2 — Graph context (optional)
+
+If `graphify-out/` exists in the project root, spawn the `graph-explore` subagent before activating the reviewer:
+
+- Query: the list of files changed from Step 1
+- Ask for direct dependents and callers of the modified modules
+
+Use the returned context to enrich the review in Step 3: flag any caller or dependent module that may be impacted but is not covered by the diff or existing tests.
+
+If `graphify-out/` is absent or graph-explore returns empty, skip this step and proceed normally.
+
+---
+
+## Step 3 — Code review
 
 Activate `@engineering-code-reviewer`.
 
@@ -53,6 +66,7 @@ Provide the agent with:
 - The full diff from Step 1
 - The relevant Sudocode specs and issues (read from `.sudocode/`) for acceptance criteria context
 - The architecture doc (`docs/arch/architecture.md`) if it exists
+- The graph context from Step 2 (if available) — list of impacted callers and dependents
 
 The agent should evaluate:
 
@@ -80,7 +94,7 @@ Present the full review output.
 
 ---
 
-## Step 3 — Handle findings
+## Step 4 — Handle findings
 
 **If there are BLOCKING findings:**
 
@@ -98,7 +112,7 @@ Then stop and tell the user:
 > These findings must be fixed before proceeding. Run `/ironforge:implement` to address them,
 > then re-run `/ironforge:review`.
 
-Do not continue to Step 4 until all BLOCKING findings are resolved.
+Do not continue to Step 5 until all BLOCKING findings are resolved.
 
 **If there are only SUGGESTION and NITPICK findings:**
 
@@ -111,7 +125,7 @@ Note it and continue to Step 4.
 
 ---
 
-## Step 4 — QA sign-off
+## Step 5 — QA sign-off
 
 Activate `@testing-reality-checker`.
 
@@ -135,19 +149,19 @@ The agent should verify:
 - Is there anything in the implementation that looks correct but will fail in production
   (race conditions, wrong assumptions about external systems, missing config)?
 
-For each gap, classify as BLOCKING or SUGGESTION using the same criteria as Step 2.
+For each gap, classify as BLOCKING or SUGGESTION using the same criteria as Step 3.
 
 Present the full QA output.
 
 ---
 
-## Step 5 — Handle QA findings
+## Step 6 — Handle QA findings
 
-Same logic as Step 3: block on BLOCKING, present suggestions without blocking.
+Same logic as Step 4: block on BLOCKING, present suggestions without blocking.
 
 ---
 
-## Step 6 — Final verdict
+## Step 7 — Final verdict
 
 **If all findings are resolved or non-blocking:**
 
