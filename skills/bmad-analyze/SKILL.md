@@ -150,11 +150,11 @@ If `graphify-out/` exists, spawn graph-explore:
 
 Prepend any returned content as `## Contexte graphe\n{graph_context}` to the agent context.
 
-Activate `@engineering-software-architect` from agency-agents, combined with `@bmad-brainstorming`.
+Activate `@bmad-agent-architect` combined with `@engineering-software-architect`.
 
 ### Brainstorming first
 
-Before converging on a design, trigger `@bmad-brainstorming`:
+Before converging on a design, explore multiple approaches:
 - Explore at least 3 distinct architectural approaches
 - For each: describe the trade-offs (complexity, performance, maintainability, reversibility)
 - Present the options to the user with a recommendation and reasoning
