@@ -54,7 +54,7 @@ If `graphify-out/` exists in the project root, spawn the `graph-explore` subagen
 
 Use the returned context to enrich the review in Step 3: flag any caller or dependent module that may be impacted but is not covered by the diff or existing tests.
 
-If `graphify-out/` is absent or graph-explore returns empty, skip this step and proceed normally.
+If `graphify-out/` is absent or `graph-explore` returns empty, skip this step and proceed normally.
 
 ---
 
@@ -117,11 +117,11 @@ Do not continue to Step 5 until all BLOCKING findings are resolved.
 **If there are only SUGGESTION and NITPICK findings:**
 
 Present them and ask the user which (if any) they want to address. Do not block on them.
-Continue to Step 4.
+Continue to Step 5.
 
 **If there are no findings:**
 
-Note it and continue to Step 4.
+Note it and continue to Step 5.
 
 ---
 
