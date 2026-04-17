@@ -5,6 +5,13 @@ All notable changes to Ironforge will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.1](https://github.com/RomainDECOSTER/ironforge/compare/v3.5.0...v3.5.1) (2026-04-17)
+
+
+### Bug Fixes
+
+* replace invalid [@bmad-brainstorming](https://github.com/bmad-brainstorming) skill ref with correct agents ([#22](https://github.com/RomainDECOSTER/ironforge/issues/22)) ([76fa726](https://github.com/RomainDECOSTER/ironforge/commit/76fa726e64b11bfd04c2844b6bb03cbfe4bfe0fa))
+
 ## [3.5.0](https://github.com/RomainDECOSTER/ironforge/compare/v3.4.2...v3.5.0) (2026-04-17)
 
 
