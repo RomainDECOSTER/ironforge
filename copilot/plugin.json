@@ -1,0 +1,43 @@
+{
+  "name": "ironforge",
+  "version": "3.5.1",
+  "description": "Orchestrates BMAD, Superpowers, Sudocode, Context7, security-guidance, and agency-agents into a composable skill-based development workflow with conditional LSP support for Rust and TypeScript.",
+  "author": {
+    "name": "RomainDECOSTER",
+    "url": "https://github.com/RomainDECOSTER"
+  },
+  "homepage": "https://github.com/RomainDECOSTER/ironforge",
+  "repository": "https://github.com/RomainDECOSTER/ironforge",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "orchestration",
+    "bmad",
+    "tdd",
+    "agency-agents",
+    "security",
+    "lsp"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "lspServers": {
+    "rust-analyzer": {
+      "command": "rust-analyzer",
+      "extensionToLanguage": {
+        ".rs": "rust"
+      }
+    },
+    "typescript-lsp": {
+      "command": "typescript-language-server",
+      "args": [
+        "--stdio"
+      ],
+      "extensionToLanguage": {
+        ".ts": "typescript",
+        ".tsx": "typescriptreact",
+        ".js": "javascript",
+        ".jsx": "javascriptreact"
+      }
+    }
+  }
+}
