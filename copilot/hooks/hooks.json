@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "${CLAUDE_PLUGIN_ROOT}/scripts/detect-lsp.sh",
+        "timeoutSec": 30
+      },
+      {
+        "type": "command",
+        "bash": "${CLAUDE_PLUGIN_ROOT}/scripts/start-sudocode-server.sh",
+        "timeoutSec": 30
+      }
+    ]
+  }
+}

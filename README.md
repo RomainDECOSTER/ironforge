@@ -90,6 +90,39 @@ Skills are composable — invoke any skill independently when artefacts already 
 /ironforge:review
 ```
 
+## Using with GitHub Copilot CLI
+
+Ironforge ships a parallel `copilot/` subtree for GitHub Copilot CLI. The same nine skills are
+available with prose-based agent delegation instead of `@agent-name` shorthand.
+
+**Install:**
+
+```bash
+bash <(curl -sSL https://raw.githubusercontent.com/RomainDECOSTER/ironforge/main/install-copilot.sh)
+```
+
+This installs Ironforge (`copilot/` subtree), BMAD Method, and agency-agents automatically.
+The following dependencies require a separate manual install via `copilot plugin install` or
+their respective CLI install commands:
+
+- Superpowers
+- Sudocode
+- Context7
+- security-guidance
+
+After installation, verify everything is configured:
+
+```
+/ironforge:setup
+```
+
+**Limitations:**
+- Agent delegation uses prose instructions — no `@agent` shorthand
+- MCP tool prefix for Graphify (`mcp__graphify__<tool_name>`) may need verification against
+  your Copilot MCP configuration
+- `graphify install` writes its hook to the Claude Code `settings.json` path; verify it is
+  registered in your Copilot settings after running `/ironforge:graph-init`
+
 ## BMAD Artefact Paths
 
 Standardized paths expected by all Ironforge skills:

@@ -10,9 +10,14 @@ It does not have a build system or test suite of its own — the repository cons
 
 ## Commands
 
-**Install Ironforge and all dependencies:**
+**Install Ironforge and all dependencies (Claude Code):**
 ```bash
 bash install.sh
+```
+
+**Install Ironforge for GitHub Copilot CLI:**
+```bash
+bash install-copilot.sh
 ```
 
 **Versioning (automated via release-please):**
@@ -75,6 +80,21 @@ docs/
   arch/     → docs/arch/architecture.md
 .sudocode/  → specs and issues (FEATURE and FULL)
 ```
+
+### Copilot CLI support
+
+`copilot/` is a parallel plugin subtree for GitHub Copilot CLI. It mirrors the Claude Code
+plugin but uses prose-based agent delegation instead of `@agent-name` syntax.
+
+| File | Purpose |
+|------|--------|
+| `copilot/plugin.json` | Copilot CLI manifest |
+| `copilot/AGENTS.md` | Ambient instructions (equivalent of the SessionStart prompt hook) |
+| `copilot/hooks/hooks.json` | Copilot CLI hooks format (command hooks only) |
+| `copilot/skills/` | Adapted SKILL.md files (9 skills) |
+| `install-copilot.sh` | One-command installer for Copilot CLI |
+
+Scripts in `scripts/` are shared — both sides invoke them via `${CLAUDE_PLUGIN_ROOT}`.
 
 ### Release workflow
 
