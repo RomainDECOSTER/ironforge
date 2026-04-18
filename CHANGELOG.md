@@ -5,6 +5,13 @@ All notable changes to Ironforge will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.6.0](https://github.com/RomainDECOSTER/ironforge/compare/v3.5.1...v3.6.0) (2026-04-18)
+
+
+### Features
+
+* add GitHub Copilot CLI support via copilot/ subtree ([#24](https://github.com/RomainDECOSTER/ironforge/issues/24)) ([3e6fb43](https://github.com/RomainDECOSTER/ironforge/commit/3e6fb433c6483d8556f5b22ca587ae7fecf57cd5))
+
 ## [3.5.1](https://github.com/RomainDECOSTER/ironforge/compare/v3.5.0...v3.5.1) (2026-04-17)
 
 
