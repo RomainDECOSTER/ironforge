@@ -28,39 +28,45 @@ Check each plugin's availability in the current session. For any that are missin
 
 ### 2. Superpowers
 - **Check**: Look for Superpowers skills (brainstorming, TDD enforcement)
-- **Install** (manual step — run in your terminal):
+- **Install** (manual steps — run in your terminal):
   ```
-  copilot plugin install superpowers
+  copilot plugin marketplace add obra/superpowers-marketplace
+  copilot plugin install superpowers@superpowers-marketplace
   ```
-  Note: if `copilot plugin install` is unavailable, check the Superpowers repository for
-  the current GitHub Copilot CLI installation method.
+  Alternative (install script):
+  ```
+  curl -fsSL https://raw.githubusercontent.com/DwainTR/superpowers-copilot/main/install.sh | bash
+  ```
 
 ### 3. Sudocode
 - **Check**: Look for Sudocode functions (`upsert_spec`, `upsert_issue`)
 - **Install** (manual step — run in your terminal):
   ```
-  copilot plugin install sudocode
+  copilot plugin install sudocode-ai/sudocode
   ```
-  Note: if `copilot plugin install` is unavailable, check the Sudocode repository for
-  the current GitHub Copilot CLI installation method.
 
 ### 4. Context7
 - **Check**: Look for the `use context7` capability
-- **Install** (manual step — run in your terminal):
+- **Install**: Context7 is not available as a Copilot CLI plugin. Configure it as an MCP server
+  by adding the following to your Copilot CLI MCP config:
+  ```json
+  {
+    "servers": {
+      "Context7": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "@upstash/context7-mcp@latest"]
+      }
+    }
+  }
   ```
-  copilot plugin install context7-plugin
-  ```
-  Note: if `copilot plugin install` is unavailable, check the Context7 repository for
-  the current GitHub Copilot CLI installation method.
 
 ### 5. security-guidance
 - **Check**: Look for security-guidance pre-tool hook
 - **Install** (manual step — run in your terminal):
   ```
-  copilot plugin install security-guidance
+  copilot plugin install security-best-practices@awesome-copilot
   ```
-  Note: if `copilot plugin install` is unavailable, check the security-guidance repository
-  for the current GitHub Copilot CLI installation method.
 
 ### 6. agency-agents
 - **Check**: Look for agent files in `.claude/agents/` (project-local) — specifically `engineering-code-reviewer` and `testing-reality-checker`
