@@ -5,6 +5,13 @@ All notable changes to Ironforge will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.6.1](https://github.com/RomainDECOSTER/ironforge/compare/v3.6.0...v3.6.1) (2026-04-20)
+
+
+### Bug Fixes
+
+* replace invalid graph-explore subagent_type refs with Skill invocations ([#26](https://github.com/RomainDECOSTER/ironforge/issues/26)) ([fc9abf2](https://github.com/RomainDECOSTER/ironforge/commit/fc9abf2c986d1e5d77f80086105af26581e7e192))
+
 ## [3.6.0](https://github.com/RomainDECOSTER/ironforge/compare/v3.5.1...v3.6.0) (2026-04-18)
 
 
