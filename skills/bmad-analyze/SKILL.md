@@ -76,17 +76,17 @@ If mode is unknown, ask before continuing.
 
 **Graph context (if available):**
 
-If `graphify-out/` exists in the project root, spawn the graph-explore subagent before
+If `graphify-out/` exists in the project root, invoke the `ironforge:graph-explore` skill before
 activating the agent:
 
-> `Agent({ subagent_type: "graph-explore", prompt: "Quels modules et features existent déjà dans le codebase ?" })`
+> `Skill({ skill: "ironforge:graph-explore", args: "Quels modules et features existent déjà dans le codebase ?" })`
 
-If graph-explore returns content, prepend it to the agent context as:
+If the skill returns content, prepend it to the agent context as:
 ```
 ## Contexte graphe
 {graph_context}
 ```
-If `graphify-out/` is absent or graph-explore returns empty, continue without graph context.
+If `graphify-out/` is absent or `ironforge:graph-explore` returns empty, continue without graph context.
 
 Activate `@bmad-agent-analyst`.
 
@@ -113,9 +113,9 @@ Present the brief to the user.
 
 **Graph context (if available):**
 
-If `graphify-out/` exists, spawn graph-explore:
+If `graphify-out/` exists, invoke `ironforge:graph-explore`:
 
-> `Agent({ subagent_type: "graph-explore", prompt: "Quelles sont les interfaces publiques et les points d'entrée existants ?" })`
+> `Skill({ skill: "ironforge:graph-explore", args: "Quelles sont les interfaces publiques et les points d'entrée existants ?" })`
 
 Prepend any returned content as `## Contexte graphe\n{graph_context}` to the agent context.
 
@@ -144,9 +144,9 @@ Present the PRD to the user.
 
 **Graph context (if available):**
 
-If `graphify-out/` exists, spawn graph-explore:
+If `graphify-out/` exists, invoke `ironforge:graph-explore`:
 
-> `Agent({ subagent_type: "graph-explore", prompt: "Quels patterns architecturaux sont utilisés ? Quelles dépendances du module cible ?" })`
+> `Skill({ skill: "ironforge:graph-explore", args: "Quels patterns architecturaux sont utilisés ? Quelles dépendances du module cible ?" })`
 
 Prepend any returned content as `## Contexte graphe\n{graph_context}` to the agent context.
 

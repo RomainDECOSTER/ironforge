@@ -55,8 +55,8 @@ checking that the LSP server is installed.
 
 If `graphify-out/` exists in the project root, Graphify is active and its MCP server is
 available. When Graphify is active:
-- BMAD agents **must** query the graph exclusively via the graph-explore agent
-  (`/ironforge:graph-explore`) — never call MCP graph tools directly in the main session
+- BMAD agents **must** query the graph exclusively via the `/ironforge:graph-explore` skill
+  — never call MCP graph tools directly in the main session
 - MCP tool names follow the pattern `mcp__graphify__<tool_name>`; verify the prefix matches
   your Copilot MCP configuration if tools appear unavailable
 

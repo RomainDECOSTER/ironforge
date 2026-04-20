@@ -85,11 +85,11 @@ Wait for confirmation before continuing.
 
 ### Graph context for Step 3 (if available)
 
-If `graphify-out/` exists, spawn graph-explore once per BMAD phase (Brief, PRD, Architecture)
+If `graphify-out/` exists, invoke `ironforge:graph-explore` once per BMAD phase (Brief, PRD, Architecture)
 with the same questions as in `/ironforge:bmad-analyze`:
-- Brief: `"Quels modules et features existent déjà dans le codebase ?"`
-- PRD: `"Quelles sont les interfaces publiques et les points d'entrée existants ?"`
-- Architecture: `"Quels patterns architecturaux sont utilisés ? Quelles dépendances du module cible ?"`
+- Brief: `Skill({ skill: "ironforge:graph-explore", args: "Quels modules et features existent déjà dans le codebase ?" })`
+- PRD: `Skill({ skill: "ironforge:graph-explore", args: "Quelles sont les interfaces publiques et les points d'entrée existants ?" })`
+- Architecture: `Skill({ skill: "ironforge:graph-explore", args: "Quels patterns architecturaux sont utilisés ? Quelles dépendances du module cible ?" })`
 
 Prepend any returned content as `## Contexte graphe\n{graph_context}` to each agent's context.
 If `graphify-out/` is absent, run the phases normally.
@@ -108,12 +108,12 @@ by the user.
 
 ### Graph context for Step 4 (if available)
 
-If `graphify-out/` exists, spawn graph-explore before the Scrum Master maps issues:
+If `graphify-out/` exists, invoke `ironforge:graph-explore` before the Scrum Master maps issues:
 
-> `Agent({ subagent_type: "graph-explore", prompt: "Quel est le blast radius du changement prévu ?" })`
+> `Skill({ skill: "ironforge:graph-explore", args: "Quel est le blast radius du changement prévu ?" })`
 
 Use the returned content to inform issue sizing and dependency mapping.
-If `graphify-out/` is absent or graph-explore returns empty, proceed normally.
+If `graphify-out/` is absent or `ironforge:graph-explore` returns empty, proceed normally.
 
 ---
 
@@ -130,13 +130,13 @@ Wait for the user to confirm the issue list looks correct before proceeding to i
 
 ### Graph context for Step 5 (if available)
 
-For each issue, if `graphify-out/` exists, spawn graph-explore before starting the TDD cycle:
+For each issue, if `graphify-out/` exists, invoke `ironforge:graph-explore` before starting the TDD cycle:
 
-> `Agent({ subagent_type: "graph-explore", prompt: "Qui appelle {cible} ? Que fait-elle appeler ?" })`
+> `Skill({ skill: "ironforge:graph-explore", args: "Qui appelle {cible} ? Que fait-elle appeler ?" })`
 
 Replace `{cible}` with the function or module targeted by the current issue.
 Use the returned content to identify additional files to read beyond those listed in the issue.
-If `graphify-out/` is absent or graph-explore returns empty, proceed normally.
+If `graphify-out/` is absent or `ironforge:graph-explore` returns empty, proceed normally.
 
 ---
 
