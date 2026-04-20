@@ -28,15 +28,22 @@ echo ""
 # ─── Step 1: Install Ironforge plugin ────────────────────────────────────────
 
 info "Installing Ironforge plugin (copilot/ subtree)..."
-if command -v copilot >/dev/null 2>&1; then
-  copilot plugin install https://github.com/RomainDECOSTER/ironforge --subdir copilot \
-    || warn "Could not install Ironforge plugin via 'copilot plugin install'."
-  warn "If the command above failed, install manually by cloning the repo and pointing"
-  warn "Copilot CLI at the copilot/ subdirectory in your Copilot settings."
+IRONFORGE_TMP="$(mktemp -d)"
+if git clone --depth 1 https://github.com/RomainDECOSTER/ironforge "$IRONFORGE_TMP/ironforge" 2>/dev/null; then
+  if command -v copilot >/dev/null 2>&1; then
+    copilot plugin install "$IRONFORGE_TMP/ironforge/copilot" \
+      || warn "Could not install Ironforge plugin via 'copilot plugin install'."
+  else
+    warn "Skipping plugin install — copilot CLI not found."
+    warn "After installing Copilot CLI, run:"
+    warn "  git clone --depth 1 https://github.com/RomainDECOSTER/ironforge /tmp/ironforge"
+    warn "  copilot plugin install /tmp/ironforge/copilot"
+  fi
+  rm -rf "$IRONFORGE_TMP"
 else
-  warn "Skipping plugin install — copilot CLI not found."
-  warn "After installing Copilot CLI, run:"
-  warn "  copilot plugin install https://github.com/RomainDECOSTER/ironforge --subdir copilot"
+  warn "Could not clone ironforge repo — install manually:"
+  warn "  git clone --depth 1 https://github.com/RomainDECOSTER/ironforge /tmp/ironforge"
+  warn "  copilot plugin install /tmp/ironforge/copilot"
 fi
 
 echo ""
