@@ -47,14 +47,13 @@ Present a brief summary of what changed (files touched, rough scope) before acti
 
 ## Step 2 — Graph context (optional)
 
-If `graphify-out/` exists in the project root, spawn the `graph-explore` subagent before activating the reviewer:
+If `graphify-out/` exists in the project root, invoke the `ironforge:graph-explore` skill before activating the reviewer:
 
-- Query: the list of files changed from Step 1
-- Ask for direct dependents and callers of the modified modules
+> `Skill({ skill: "ironforge:graph-explore", args: "Qui appelle les modules modifiés ? Quel est le blast radius du diff ?" })`
 
 Use the returned context to enrich the review in Step 3: flag any caller or dependent module that may be impacted but is not covered by the diff or existing tests.
 
-If `graphify-out/` is absent or `graph-explore` returns empty, skip this step and proceed normally.
+If `graphify-out/` is absent or `ironforge:graph-explore` returns empty, skip this step and proceed normally.
 
 ---
 

@@ -84,11 +84,11 @@ Wait for confirmation before continuing.
 
 ### Graph context for Step 3 (if available)
 
-If `graphify-out/` exists, delegate to the graph-explore agent once per BMAD phase (Brief, PRD, Architecture)
+If `graphify-out/` exists, run `/ironforge:graph-explore` once per BMAD phase (Brief, PRD, Architecture)
 with the same questions as in `/ironforge:bmad-analyze`:
-- Brief: delegate to the graph-explore agent with this query: "Quels modules et features existent déjà dans le codebase ?"
-- PRD: delegate to the graph-explore agent with this query: "Quelles sont les interfaces publiques et les points d'entrée existants ?"
-- Architecture: delegate to the graph-explore agent with this query: "Quels patterns architecturaux sont utilisés ? Quelles dépendances du module cible ?"
+- Brief: Run `/ironforge:graph-explore` with this query: "Quels modules et features existent déjà dans le codebase ?"
+- PRD: Run `/ironforge:graph-explore` with this query: "Quelles sont les interfaces publiques et les points d'entrée existants ?"
+- Architecture: Run `/ironforge:graph-explore` with this query: "Quels patterns architecturaux sont utilisés ? Quelles dépendances du module cible ?"
 
 Prepend any returned content as `## Contexte graphe\n{graph_context}` to each agent's context.
 If `graphify-out/` is absent, run the phases normally.
@@ -107,12 +107,12 @@ by the user.
 
 ### Graph context for Step 4 (if available)
 
-If `graphify-out/` exists, delegate to the graph-explore agent before the Scrum Master maps issues:
+If `graphify-out/` exists, run `/ironforge:graph-explore` before the Scrum Master maps issues:
 
-> Delegate to the graph-explore agent with this query: "Quel est le blast radius du changement prévu ?"
+> Run `/ironforge:graph-explore` with this query: "Quel est le blast radius du changement prévu ?"
 
 Use the returned content to inform issue sizing and dependency mapping.
-If `graphify-out/` is absent or graph-explore returns empty, proceed normally.
+If `graphify-out/` is absent or `/ironforge:graph-explore` returns empty, proceed normally.
 
 ---
 
@@ -129,13 +129,13 @@ Wait for the user to confirm the issue list looks correct before proceeding to i
 
 ### Graph context for Step 5 (if available)
 
-For each issue, if `graphify-out/` exists, delegate to the graph-explore agent before starting the TDD cycle:
+For each issue, if `graphify-out/` exists, run `/ironforge:graph-explore` before starting the TDD cycle:
 
-> Delegate to the graph-explore agent with this query: "Qui appelle {cible} ? Que fait-elle appeler ?"
+> Run `/ironforge:graph-explore` with this query: "Qui appelle {cible} ? Que fait-elle appeler ?"
 
 Replace `{cible}` with the function or module targeted by the current issue.
 Use the returned content to identify additional files to read beyond those listed in the issue.
-If `graphify-out/` is absent or graph-explore returns empty, proceed normally.
+If `graphify-out/` is absent or `/ironforge:graph-explore` returns empty, proceed normally.
 
 ---
 

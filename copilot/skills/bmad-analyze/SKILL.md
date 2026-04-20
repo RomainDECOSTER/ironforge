@@ -76,17 +76,17 @@ If mode is unknown, ask before continuing.
 
 **Graph context (if available):**
 
-If `graphify-out/` exists in the project root, delegate to the graph-explore agent before
+If `graphify-out/` exists in the project root, run `/ironforge:graph-explore` before
 proceeding with the brief phase:
 
-> Delegate to the graph-explore agent with this query: "Quels modules et features existent déjà dans le codebase ?"
+> Run `/ironforge:graph-explore` with this query: "Quels modules et features existent déjà dans le codebase ?"
 
-If graph-explore returns content, prepend it to the agent context as:
+If `/ironforge:graph-explore` returns content, prepend it to the agent context as:
 ```
 ## Contexte graphe
 {graph_context}
 ```
-If `graphify-out/` is absent or graph-explore returns empty, continue without graph context.
+If `graphify-out/` is absent or `/ironforge:graph-explore` returns empty, continue without graph context.
 
 Use the BMAD analyst agent to complete this phase.
 
@@ -113,9 +113,9 @@ Present the brief to the user.
 
 **Graph context (if available):**
 
-If `graphify-out/` exists, delegate to the graph-explore agent:
+If `graphify-out/` exists, run `/ironforge:graph-explore`:
 
-> Delegate to the graph-explore agent with this query: "Quelles sont les interfaces publiques et les points d'entrée existants ?"
+> Run `/ironforge:graph-explore` with this query: "Quelles sont les interfaces publiques et les points d'entrée existants ?"
 
 Prepend any returned content as `## Contexte graphe\n{graph_context}` to the agent context.
 
@@ -144,9 +144,9 @@ Present the PRD to the user.
 
 **Graph context (if available):**
 
-If `graphify-out/` exists, delegate to the graph-explore agent:
+If `graphify-out/` exists, run `/ironforge:graph-explore`:
 
-> Delegate to the graph-explore agent with this query: "Quels patterns architecturaux sont utilisés ? Quelles dépendances du module cible ?"
+> Run `/ironforge:graph-explore` with this query: "Quels patterns architecturaux sont utilisés ? Quelles dépendances du module cible ?"
 
 Prepend any returned content as `## Contexte graphe\n{graph_context}` to the agent context.
 

@@ -52,15 +52,15 @@ If a blocker is detected (dependency issue not yet complete), stop and report:
 ## Step 1b — Graph context (if available)
 
 If `graphify-out/` exists in the project root, extract the target function or module name
-from the issue title or description, then delegate to the graph-explore agent:
+from the issue title or description, then run `/ironforge:graph-explore`:
 
-> Delegate to the graph-explore agent with this query: "Qui appelle {cible} ? Que fait-elle appeler ? Blast radius ?"
+> Run `/ironforge:graph-explore` with this query: "Qui appelle {cible} ? Que fait-elle appeler ? Blast radius ?"
 
 Replace `{cible}` with the actual function/module name from the issue.
 
-If graph-explore returns content, use it to extend the list of files to read in Step 2 —
+If `/ironforge:graph-explore` returns content, use it to extend the list of files to read in Step 2 —
 callers and callees may need to be read even if not listed in the issue.
-If `graphify-out/` is absent or graph-explore returns empty, proceed directly to Step 2.
+If `graphify-out/` is absent or `/ironforge:graph-explore` returns empty, proceed directly to Step 2.
 
 ---
 
