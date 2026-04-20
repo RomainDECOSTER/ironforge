@@ -5,6 +5,13 @@ All notable changes to Ironforge will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.6.2](https://github.com/RomainDECOSTER/ironforge/compare/v3.6.1...v3.6.2) (2026-04-20)
+
+
+### Bug Fixes
+
+* replace --subdir flag with clone+local-path in install-copilot.sh ([#28](https://github.com/RomainDECOSTER/ironforge/issues/28)) ([4f5296f](https://github.com/RomainDECOSTER/ironforge/commit/4f5296fae7c6ba8404b4ad50842c710bedf6f441))
+
 ## [3.6.1](https://github.com/RomainDECOSTER/ironforge/compare/v3.6.0...v3.6.1) (2026-04-20)
 
 
